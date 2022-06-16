@@ -145,9 +145,9 @@ def build_tabs():
     return dbc.Tabs(
         [
             dbc.Tab(render_map(),
-                    label='map_select', tab_id='map_tab', ),
-            dbc.Tab(label='Velocity', tab_id='vcur_tab'),
+                    label='moorings', tab_id='map_tab', ),
             dbc.Tab(label='Temperature', tab_id='temp_tab'),
+            dbc.Tab(label='Velocity', tab_id='vcur_tab'),
             dbc.Tab(label='Daily Temperature', tab_id='daily_temp_tab'),
             dbc.Tab(label='Climatology', tab_id='climatology_tab'),
             dbc.Tab(label='Gridded Temperature', tab_id='gridded_temp_tab'),
