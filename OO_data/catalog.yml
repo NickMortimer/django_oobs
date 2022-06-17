@@ -1,0 +1,29 @@
+metadata:
+  version: 1
+sources:
+  moorings:
+    driver: netcdf
+    description: 'IMOS - Mooring Data'    
+    metadata:
+      permalink: https://catalogue-imos.aodn.org.au/geonetwork/srv/eng/catalog.search#/metadata/aaad092c-c3af-42e6-87e0-bdaef945f522
+    parameters:
+      mooring:
+        description: Name of Mooring  
+        type: str 
+        default: "NRSYON"
+        allowed: ['GBRMYR', 'GBRPPS', 'GBRLSL', 'GBRHIS', 'GBROTE', 'GBRCCH', 'NWSBAR', 'NWSLYN', 'NWSROW', 'NWSBRW',
+            'NRSYON','TAN100']
+      prop:
+        description: physical property eg. TEMP or VV
+        type: str 
+        default: "TEMP"
+        allowed: ["TEMP", "VV"]
+    args:
+      urlpath: '{{CATALOG_DIR}}/{{mooring}}/{{mooring}}_{{prop}}_daily.nc'
+      storage_options:
+        simple_templates: True
+        target_options: {}
+        target_protocol: http
+        remote_options:
+          anon: true
+        remote_protocol: s3

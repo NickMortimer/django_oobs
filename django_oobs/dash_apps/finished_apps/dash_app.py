@@ -20,6 +20,7 @@ import getLTSPname
 import extractVariable
 import matplotlib.pyplot as plt
 import numpy as np
+import intake
 # from tqdm import tqdm, trange
 # from time import sleep
 # from tqdm import tqdm
@@ -43,18 +44,17 @@ pd.set_option('display.max_rows', None)
 app = DjangoDash('dash_app', external_stylesheets=external_stylesheets)
 
 
-
 MOORINGS = ['GBRMYR', 'GBRPPS', 'GBRLSL', 'GBRHIS', 'GBROTE', 'GBRCCH', 'NWSBAR', 'NWSLYN', 'NWSROW', 'NWSBRW',
             'NRSYON']
 print("Running Dashboard Prototype...")
 map_selection = "NRSYON"
-
+cat = intake.open_catalog('OO_data/catalog.yml')
 # Create map
 def render_map():
     map_data = pd.read_excel('sites.xlsx')
     map_data = pd.DataFrame(map_data)
     map_data = map_data.drop(columns=['x', 'y', 'd'])
-    return [dcc.Graph(id='moorings_map', figure=px.scatter_mapbox
+    return [html.H3(f'Selected mooring: {map_selection}', style={"color": "DarkSlateGrey"}),dcc.Graph(id='moorings_map', figure=px.scatter_mapbox
         (
         map_data,
         lat=map_data['Latitude'],
@@ -145,7 +145,7 @@ def build_tabs():
     return dbc.Tabs(
         [
             dbc.Tab(render_map(),
-                    label='moorings', tab_id='map_tab', ),
+                    label='Map', tab_id='map_tab', ),
             dbc.Tab(label='Temperature', tab_id='temp_tab'),
             dbc.Tab(label='Velocity', tab_id='vcur_tab'),
             dbc.Tab(label='Daily Temperature', tab_id='daily_temp_tab'),
